@@ -1,0 +1,120 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left align-center-elements">
+            <img src="../../Images/Logo2.jpg" alt="" />
+            <h3>Welcome</h3>
+        </div>
+        <div id="register_tab_sm" class="align-center-elements mb-2 hide-lg">
+            @Html.Partial("_LoginTab")
+        </div>
+        <div class="col-md-9 register-right">
+            <div id="register_tab_lg">
+                @Html.Partial("_LoginTab")
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row register-form align-items-self-start register-container">
+                        <div class="col-md-12">
+                            <h3 class="register-title-heading text-center">Register</h3>
+                        </div>
+                        <div class="col-md-6 align-center-elements justify-content-center">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input id="register_first_name" class="form-control" placeholder="First Name *" />
+                                <span id="register_first_name_error_message" class="field-validation-error hide" data-valmsg-for="register_first_name" data-valmsg-replace="true">@Constant.REGISTER_FIRST_NAME_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input id="register_last_name" class="form-control" placeholder="Last Name *" />
+                                <span id="register_last_name_error_message" class="field-validation-error hide" data-valmsg-for="register_last_name" data-valmsg-replace="true">@Constant.REGISTER_LAST_NAME_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group register-password-group icon-group">
+                                <label>Password</label>
+                                <div class="tooltip-container">
+                                    <span class="tooltip-content">@Html.Partial("_PasswordRequirement")</span>
+                                    <i class="fa-icon fa fa-info-circle password-info-icon"></i>
+                                </div>
+                                <input type="password" id="register_password" class="form-control" name="register_password" placeholder="Password *" />
+                                <span id="register_password_error_message" class="field-validation-error hide" data-valmsg-for="register_password" data-valmsg-replace="true">@Constant.ENTER_PASSWORD_ERROR_MESSAGE</span>
+                                <span id="register_password_invalid_error_message" class="field-validation-error hide" data-valmsg-for="register_password" data-valmsg-replace="true">@Constant.ENTER_PASSWORD_INVALID_ERROR_MESSAGE</span>
+                                <span id="register_password_requirements_error_message" class="field-validation-error hide" data-valmsg-for="register_password" data-valmsg-replace="true">@Constant.ENTER_PASSWORD_REQUIREMENTS_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" id="register_confirm_password" class="form-control" name="register_confirm_password" placeholder="Confirm Password *" />
+                                <span id="register_confirm_password_error_message" class="field-validation-error hide" data-valmsg-for="register_confirm_password" data-valmsg-replace="true">@Constant.ENTER_CONFIRMATION_PASSWORD_ERROR_MESSAGE</span>
+                                <span id="register_confirm_password_invalid_error_message" class="field-validation-error hide" data-valmsg-for="register_confirm_password" data-valmsg-replace="true">@Constant.ENTER_CONFIRMATION_PASSWORD_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Date of birth</label>
+                                <input id="register_date_of_birth" class="form-control mte-date-picker" placeholder="Date of birth (mm/dd/yyyy) *" />
+                                <span id="register_date_of_birth_error_message" class="field-validation-error hide" data-valmsg-for="register_date_of_birth" data-valmsg-replace="true">@Constant.REGISTER_DATE_OF_BIRTH_ERROR_MESSAGE</span>
+                                <span id="register_date_of_birth_invalid_error_message" class="field-validation-error hide" data-valmsg-for="register_date_of_birth" data-valmsg-replace="true">@Constant.REGISTER_DATE_OF_BIRTH_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 align-center-elements justify-content-center margin-bottom-sm-m15">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input id="register_email" class="form-control" placeholder="Email *" />
+                                <span id="register_email_error_message" class="field-validation-error hide" data-valmsg-for="register_email" data-valmsg-replace="true">@Constant.ENTER_EMAIL_ERROR_MESSAGE</span>
+                                <span id="register_email_invalid_error_message" class="field-validation-error hide" data-valmsg-for="register_email" data-valmsg-replace="true">@Constant.ENTER_EMAIL_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input id="register_phone" class="form-control mte-phone-control" placeholder="Phone *" />
+                                <span id="register_phone_error_message" class="field-validation-error hide" data-valmsg-for="register_phone" data-valmsg-replace="true">@Constant.ENTER_PHONE_ERROR_MESSAGE</span>
+                                <span id="register_phone_invalid_error_message" class="field-validation-error hide" data-valmsg-for="register_phone" data-valmsg-replace="true">@Constant.ENTER_PHONE_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Security Question</label>
+                                <select id="register_security_question" class="form-control">
+                                    <option value="" class="select-placeholder hidden">Security Question *</option>
+                                    @foreach (var securityQuestion in ViewData[Constant.SECURITY_QUESTION_TABLE] as List<SecurityQuestions>)
+                                    {
+                                        <option value="@securityQuestion.SecurityQuestionId">@securityQuestion.SecurityQuestion</option>
+                                    }
+                                </select>
+                                <span id="register_security_question_error_message" class="field-validation-error hide" data-valmsg-for="register_security_question" data-valmsg-replace="true">@Constant.REGISTER_SECURITY_QUESTION_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Security Answer</label>
+                                <input id="register_security_answer" class="form-control" placeholder="Answer *" />
+                                <span id="register_security_answer_error_message" class="field-validation-error hide" data-valmsg-for="register_security_answer" data-valmsg-replace="true">@Constant.REGISTER_SECURITY_ANSWER_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <div id="register_gender_container" class="row">
+                                    <div class="col-md-12">
+                                        <label>Gender</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input class="radio inline cursor-pointer" id="register_male_gender" type="radio" />
+                                        <span class="radio-option">Male</span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input class="radio inline cursor-pointer" id="register_female_gender" type="radio" />
+                                        <span class="radio-option">Female</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span id="register_gender_error_message" class="field-validation-error hide">@Constant.REGISTER_GENDER_ERROR_MESSAGE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-25">
+                            <button id="register_button" class="btnRegister login-register-button hover-float-shadow float-right-sm">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@using MiniTravelingExplorer.Utils
+@using System.Configuration
+
+@{ 
+    int toastNotificationTimeout = Convert.ToInt32(ConfigurationManager.AppSettings[Constant.TOAST_NOTIFICATION_TIMEOUT_KEY]);
+    string toastNotificationTimeoutString = string.Concat((toastNotificationTimeout/1000).ToString(), Constant.S_CHARACTER.ToLower());
+}
+
+<input type="hidden" id="toast_notification_timeout" value="@toastNotificationTimeout" />
+
+<div id="toastBox"></div>
+
+<style>
+    .mte-toast::after {
+        animation: anim @(toastNotificationTimeoutString) linear;
+    }
+</style>

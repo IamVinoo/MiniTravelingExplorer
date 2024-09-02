@@ -1,0 +1,84 @@
+﻿@using System.Configuration
+@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    Location locationDetail = (Location)ViewData[Constant.LOCATION_DETAIL];
+}
+
+<input type="hidden" id="book_card_user_login_email" value="@ViewData[Constant.USER_LOGIN_EMAIL]" />
+<input type="hidden" id="book_card_email_error_message_text" value="@Constant.ENTER_EMAIL_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_email_invalid_error_message_text" value="@Constant.ENTER_EMAIL_INVALID_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_confirm_email_error_message_text" value="@Constant.ENTER_EMAIL_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_confirm_email_invalid_error_message_text" value="@Constant.ENTER_CONFIRMATION_EMAIL_INVALID_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_email_message_text" value="@Constant.BOOK_CARD_EMAIL_MESSAGE" />
+<input type="hidden" id="book_card_checkbox_text_message" value="@Constant.BOOK_CARD_CHECKBOX_TEXT" />
+<input type="hidden" id="book_card_card_number_error_message_text" value="@Constant.ENTER_CARD_NUMBER_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_card_number_invalid_error_message_text" value="@Constant.ENTER_CARD_NUMBER_INVALID_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_card_name_error_message_text" value="@Constant.ENTER_CARD_NAME_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_expiry_error_message_text" value="@Constant.ENTER_CARD_EXPIRY_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_expiry_invalid_error_message_text" value="@Constant.ENTER_CARD_EXPIRY_INVALID_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_cvv_error_message_text" value="@Constant.ENTER_CARD_CVV_ERROR_MESSAGE" />
+<input type="hidden" id="book_card_cvv_invalid_error_message_text" value="@Constant.ENTER_CARD_CVV_INVALID_ERROR_MESSAGE" />
+<input type="hidden" id="book_trip_date_error_message_text" value="@Constant.ENTER_TRIP_DATE_ERROR_MESSAGE" />
+<input type="hidden" id="book_trip_date_invalid_error_message_text" value="@Constant.ENTER_TRIP_DATE_INVALID_ERROR_MESSAGE" />
+<input type="hidden" id="book_number_of_ticket_error_message_text" value="@Constant.ENTER_NUMBER_OF_TICKET_ERROR_MESSAGE" />
+<input type="hidden" id="book_promo_code_error_message_text" value="@Constant.INVALID_PROMO_CODE_ERROR_MESSAGE" />
+<input type="hidden" id="book_promo_code_validate_error_message_text" value="@Constant.VALIDATE_PROMO_CODE_ERROR_MESSAGE" />
+<input type="hidden" id="book_promo_code_validate_success_message" value="@Constant.VALID_PROMO_CODE_SUCCESS_MESSAGE" />
+<input type="hidden" id="max_ticket_allowed_to_book" value="@ConfigurationManager.AppSettings[Constant.MAX_TICKET_ALLOWED_TO_BOOK_KEY]" />
+
+@if (locationDetail != null && locationDetail.LocationId > 0)
+{
+    <div class="container-xxl pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="location-detail-img" src="@locationDetail.LocationImageUrl" />
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4 class="display-inline-block">@locationDetail.Name</h4>
+                    <h6 class="display-inline-block location-detail-temperature" title="@locationDetail.Weather.Description">@locationDetail.Weather.Temperature</h6>
+                    <div class="display-inline-block location-detail-weather-icon-container">
+                        <span class="tooltip-content @(locationDetail.Weather.IsNotAvailable ? "hide": "")">@Html.Partial("_WeatherInformation", locationDetail.Weather)</span>
+                        <img class="location-detail-weather-icon" src="@locationDetail.Weather.WeatherIconUrl" />
+                    </div>
+                    <div class="left-hand-icon-container display-inline-block hide-sm">
+                        <i class="fas fa-hand-point-left text-secondary left-hand-icon"></i><span class="location-detail-hover-me-text text-secondary">Hover me</span>
+                    </div>
+                    <div class="display-inline-block float-right">
+                        <h6 class="display-inline-block margin-right-7" title="Opening Hours"><img class="location-detail-open-sign" src="../../Images/open-sign.png" /><span class="text-primary margin-left-7">@(locationDetail.OpeningTimeDisplay)</span></h6>
+                        <h6 class="display-inline-block margin-right-7" title="Closing Hours"><img class="location-detail-close-sign" src="../../Images/closed-sign.png" /><span class="text-primary margin-left-4">@(locationDetail.ClosingTimeDisplay)</span></h6>
+                        <h6 class="display-inline-block line-height-43 mb-0">Tickets Available: <h5 id="location_detail_available_ticket" class="text-primary display-inline-block margin-left-10">@locationDetail.Ticket</h5></h6>
+                    </div>
+                    <h6>
+                        @locationDetail.Activity <span class="text-default text-primary">
+                            <span id="location_detail_currency_symbol">@locationDetail.CurrencySymbol</span><span id="location_detail_rate">@locationDetail.Rate</span> - <span>@locationDetail.TotalNumberOfPerson</span> @if (locationDetail.TotalNumberOfPerson > 1)
+                            {<span>Persons</span> }
+                            else
+                            { <span>Person</span>}
+                        </span>
+                    </h6>
+                </div>
+                <div class="col-md-12 mt-1">
+                    <span class="d-flex justify-content-space-around text-align-justify">@locationDetail.Description</span>
+                </div>
+                <div class="col-md-12 text-right mt-3 mb-sm-3 margin-bottom-m20">
+                    <a class="btn btn-sm btn-secondary rounded py-2 px-4 mx-2" href="@string.Concat(Constant.FORWARD_SLASH, @Constant.LOCATION_LIST_LINK)"><span>Back to Browse</span></a>
+                    @if (@locationDetail.Ticket > 0)
+                    {
+                        <a id="location_detail_book_ticket" class="btn btn-sm btn-primary rounded py-2 px-4" href="javascript:void(0);" onclick="bookMyTicket(@locationDetail.LocationId);"><span>Book Now</span></a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Partial("_Footer")

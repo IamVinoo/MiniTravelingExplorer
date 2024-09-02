@@ -1,0 +1,93 @@
+﻿@model MiniTravelingExplorer.Models.LocationData
+@using MiniTravelingExplorer.Utils
+
+@{ 
+    string currencySymbol = Model?.LocationList?.FirstOrDefault()?.CurrencySymbol;
+}
+
+<div class="row g-2">
+    <div class="col-md-9 col-lg-10">
+        <div class="icon-group">
+            <i class="fa fa-times location-search-clear-icon cursor-pointer mt-0 hide" title="Clear search"></i>
+            <input type="text" class="form-control location-search-value" placeholder="Search" maxlength="100" />
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-2 align-center-elements icon-group location-search-button-container">
+        <i class="fa fa-search text-white location-search-icon mt-0"></i>
+        <button class="btn btn-primary w-100 location-search-button"><span class="location-search-button-text">Search</span></button>
+    </div>
+</div>
+
+<div class="row mt-2 location-search-advanced-filter-container hide">
+    <div id="location_search_advanced_link" class="col-md-12 text-right p-0 margin-left-m25 margin-bottom-m20">
+        <div class="icon-group">
+            <i class="fa fa-angle-down location-search-angle-down-icon"></i>
+            <i class="fa fa-angle-up location-search-angle-up-icon hide"></i>
+            <a href="javascript:void(0);">Advanced Filter</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 location-search-filter-criteria-container hide">
+    <div class="col-md-3">
+        <label class="location-search-filter-criteria-label mb-1">Price Range (@currencySymbol)</label>
+        <div class="row mt-2">
+            <div class="col-md-2 p-0 w-sm-20">
+                <input type="number" id="location_search_filter_criteria_minimum_price" class="form-control location-search-filter-criteria-range-display text-center p-0 margin-left-10" />
+            </div>
+            <div class="col-md-8 d-flex align-items-center pl-22 w-sm-60">
+                <div id="location_search_filter_criteria_price_slider" class="form-control"></div>
+            </div>
+            <div class="col-md-2 p-0 w-sm-20">
+                <input type="number" id="location_search_filter_criteria_maximum_price" class="form-control location-search-filter-criteria-range-display text-center p-0 margin-right-m10" />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <label class="location-search-filter-criteria-label mb-1">Activity</label>
+        <select id="location_search_filter_criteria_activity" class="form-control">
+            <option value="" class="select-placeholder hidden location-search-filter-criteria-activity-first-option">Activity</option>
+            @if (Model != null && Model.Activity != null && Model.Activity.Any())
+            {
+                foreach (var activity in Model.Activity)
+                {
+                    <option value="@activity.Name">@activity.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="location-search-filter-criteria-label mb-1">Temperature Range (@string.Concat(Constant.DEGREE_CHARACTER, Constant.C_CHARACTER))</label>
+        <div class="row mt-2">
+            <div class="col-md-2 p-0 w-sm-20">
+                <input type="number" id="location_search_filter_criteria_minimum_temperature" class="form-control location-search-filter-criteria-range-display text-center p-0 margin-left-10" />
+            </div>
+            <div class="col-md-8 d-flex align-items-center pl-22 w-sm-60">
+                <div id="location_search_filter_criteria_temperature_slider" class="form-control"></div>
+            </div>
+            <div class="col-md-2 p-0 w-sm-20">
+                <input type="number" id="location_search_filter_criteria_maximum_temperature" class="form-control location-search-filter-criteria-range-display text-center p-0 margin-right-m10" />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <label class="location-search-filter-criteria-label mb-1">Weather</label>
+        <select id="location_search_filter_criteria_weather" class="form-control">
+            <option value="" class="select-placeholder hidden location-search-filter-criteria-weather-first-option">Weather</option>
+            @if (Model != null && Model.Weather != null && Model.Weather.Any())
+            {
+                foreach (var weather in Model.Weather)
+                {
+                    <option value="@weather.Name">@weather.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-md-12 text-right p-0 margin-left-m30 margin-bottom-m20 mt-2">
+        <button id="location_search_filter_criteria_clear" class="btn btn-primary margin-right-m15">Reset</button>
+    </div>
+</div>

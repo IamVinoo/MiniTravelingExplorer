@@ -1,0 +1,20 @@
+IF (EXISTS (SELECT * 
+                 FROM [INFORMATION_SCHEMA].[TABLES] 
+                 WHERE [TABLE_SCHEMA] = 'MTE'
+				 AND [TABLE_NAME] = 'Staff'))
+BEGIN
+    DROP TABLE [MTE].[Staff];
+END
+
+CREATE TABLE [MTE].[Staff] (
+    [StaffId] INT PRIMARY KEY IDENTITY(1, 1),
+    [Name] NVARCHAR(50) NOT NULL,
+    [Designation] NVARCHAR(100) NOT NULL,
+    [LinkedInUrl] NVARCHAR(200) NOT NULL,
+    [FacebookUrl] NVARCHAR(200) NOT NULL,
+    [InstagramUrl] NVARCHAR(200) NOT NULL,
+	[StaffImage] VARBINARY(MAX) NOT NULL,
+	[StaffImageType] NVARCHAR(100) NOT NULL,
+    [CreatedDate] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+    [ModifiedDate] DATETIME NOT NULL DEFAULT GETUTCDATE()
+);

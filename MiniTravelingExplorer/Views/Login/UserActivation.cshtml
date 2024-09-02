@@ -1,0 +1,31 @@
+﻿@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    string fullName = ViewBag.FullName;
+}
+
+<div class="user-activation-container row mt-5">
+    <div class="col-md-12 align-center-elements">
+        @if (!string.IsNullOrEmpty(fullName))
+        {
+            <h1>Welcome, @fullName</h1>
+            <h1 class="text-center">Your account has been activated!</h1>
+            <span>Login now and unleash the explorer in you</span>
+            <button id="user_activation_button" class="btnUserACtivation hover-float-shadow p-1 mt-2 mb-2">Login</button>
+        }
+        else
+        {
+            <div class="icon-group">
+                <i class="fa fa-exclamation-triangle user-activation-exclamation-triangle"></i>
+            </div>
+            <h3>@Constant.USER_ACTIVATION_INVALID_TOKEN_MESSAGE</h3>
+            <h3 class="text-center">@UtilFunction.ReplaceString(Constant.CONTACT_CUSTOMER_SUPPORT_MESSAGE, Constant.PERIOD, string.Empty)</h3>
+        }
+    </div>
+</div>

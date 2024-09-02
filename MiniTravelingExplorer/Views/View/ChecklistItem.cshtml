@@ -1,0 +1,56 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    List<MyChecklistItem> myChecklistItemList = ViewData[Constant.CHECKLIST_ITEM_TABLE] as List<MyChecklistItem>;
+    bool isChecklistItemEmpty = myChecklistItemList == null || !myChecklistItemList.Any();
+}
+
+<div class="container-xxl my-checklist-item-container py-5 @(!isChecklistItemEmpty ? "pt-10" : "")">
+    <div class="container">
+        @if (!isChecklistItemEmpty)
+        {
+            <div class="my-checklist-item-list-container d-flex justify-content-center mt-4">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table my-checklist-item-table">
+                            <tbody class="my-checklist-item-table-body">
+                                @foreach (MyChecklistItem myChecklistItem in myChecklistItemList)
+                                {
+                                    <tr class="my-checklist-item-table-row">
+                                        <td class="my-checklist-item-table-checkbox-container">
+                                            <input type="checkbox" class="my-checklist-item-checkbox pointer-events-none" @(myChecklistItem.IsChecked ? "checked='checked'" : "") />
+                                        </td>
+                                        <td class="my-checklist-item-table-name-container">
+                                            <span class="my-checklist-item-table-name">@myChecklistItem.Name</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="my-checklist-item-table-spacer"><td colspan="100"></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row mt-5">
+                <div class="col-md-12 align-center-elements">
+                    <img class="development-hiker-image" src="../../Images/Hiker.png" />
+                    <h1 class="text-center">@Constant.VIEW_CHECKLIST_ITEM_EMPTY_MESSAGE</h1>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@Html.Partial("_Footer")

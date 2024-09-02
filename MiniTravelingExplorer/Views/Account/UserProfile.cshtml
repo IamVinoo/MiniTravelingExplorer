@@ -1,0 +1,114 @@
+﻿@using System.Configuration
+@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    User user = (User)ViewData[Constant.USER_TABLE];
+}
+
+<input type="hidden" id="user_profile_date_of_birth_value" value="@user.DateOfBirth" />
+<input type="hidden" id="user_profile_phone_value" value="@user.Phone" />
+<input type="hidden" id="user_profile_gender_value" value="@user.Gender" />
+<input type="hidden" id="user_profile_security_question_value" value="@user.SecurityQuestionId" />
+<input type="hidden" id="user_profile_image_value" value="@user.UserImage" />
+<input type="hidden" id="user_profile_image_name_value" value="@user.UserPhotoName" />
+<input type="hidden" id="user_profile_image_type_value" value="@user.UserPhotoType" />
+<input type="hidden" id="user_profile_image_max_size_value" value="@ConfigurationManager.AppSettings[Constant.USER_PROFILE_IMAGE_MAX_SIZE_KEY]" />
+
+<div class="container register user-profile-container">
+    <div class="row">
+        <div class="col-md-3 user-profile-left align-center-elements icon-group">
+            <img id="user_profile_image" src="" class="hide" alt="User Image" />
+            <img id="user_profile_default_image" src="../../Images/User.jpg" alt="User Default Image" />
+            <i class="fa fa-times-circle user-profile-remove-image hide" title="Remove image to change image"></i>
+            <label id="user_profile_upload_container" class="btnUserProfile login-register-button hover-float-shadow">
+                <input type="file" id="user_profile_upload" class="hide" />
+                <span id="user_profile_image_input_text">Change</span>
+            </label>
+            <div class="user-profile-image-drag-and-drop-container mt-3 hide hide-sm">
+                <span class="user-profile-image-drag-and-drop-text">You can also drag and drop your image here!</span>
+                <i class="fa fa-upload user-profile-image-drag-and-drop-icon"></i>
+            </div>
+        </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row register-form align-items-self-start register-container">
+                        <div class="col-md-12">
+                            <h3 class="user-profile-title-heading text-center">User Profile</h3>
+                        </div>
+                        <div class="col-md-6 align-center-elements justify-content-center">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input id="user_profile_first_name" class="form-control" placeholder="First Name *" value="@user.FirstName" maxlength="50" />
+                                <span id="user_profile_first_name_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_first_name" data-valmsg-replace="true">@Constant.REGISTER_FIRST_NAME_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input id="user_profile_last_name" class="form-control" placeholder="Last Name *" value="@user.LastName" maxlength="50" />
+                                <span id="user_profile_last_name_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_last_name" data-valmsg-replace="true">@Constant.REGISTER_LAST_NAME_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Date of birth</label>
+                                <input id="user_profile_date_of_birth" class="form-control mte-date-picker" placeholder="Date of birth (mm/dd/yyyy) *" />
+                                <span id="user_profile_date_of_birth_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_date_of_birth" data-valmsg-replace="true">@Constant.REGISTER_DATE_OF_BIRTH_ERROR_MESSAGE</span>
+                                <span id="user_profile_date_of_birth_invalid_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_date_of_birth" data-valmsg-replace="true">@Constant.REGISTER_DATE_OF_BIRTH_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <div id="user_profile_gender_container" class="row">
+                                    <div class="col-md-12">
+                                        <label>Gender</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input class="radio inline cursor-pointer" id="user_profile_male_gender" type="radio" />
+                                        <span class="radio-option">Male</span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input class="radio inline cursor-pointer" id="user_profile_female_gender" type="radio" />
+                                        <span class="radio-option">Female</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span id="user_profile_gender_error_message" class="field-validation-error hide">@Constant.REGISTER_GENDER_ERROR_MESSAGE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 align-center-elements justify-content-center margin-bottom-sm-m15">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input id="user_profile_phone" class="form-control mte-phone-control" placeholder="Phone *" maxlength="20" />
+                                <span id="user_profile_phone_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_phone" data-valmsg-replace="true">@Constant.ENTER_PHONE_ERROR_MESSAGE</span>
+                                <span id="user_profile_phone_invalid_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_phone" data-valmsg-replace="true">@Constant.ENTER_PHONE_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Security Question</label>
+                                <select id="user_profile_security_question" class="form-control">
+                                    <option value="" class="select-placeholder hidden">Security Question *</option>
+                                    @foreach (var securityQuestion in ViewData[Constant.SECURITY_QUESTION_TABLE] as List<SecurityQuestions>)
+                                    {
+                                        <option value="@securityQuestion.SecurityQuestionId">@securityQuestion.SecurityQuestion</option>
+                                    }
+                                </select>
+                                <span id="user_profile_security_question_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_security_question" data-valmsg-replace="true">@Constant.REGISTER_SECURITY_QUESTION_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Security Answer</label>
+                                <input id="user_profile_security_answer" class="form-control" placeholder="Answer *" value="@user.SecurityAnswer" maxlength="50" />
+                                <span id="user_profile_security_answer_error_message" class="field-validation-error hide" data-valmsg-for="user_profile_security_answer" data-valmsg-replace="true">@Constant.REGISTER_SECURITY_ANSWER_ERROR_MESSAGE</span>
+                            </div>
+                            <button id="user_profile_button" class="btnUserProfile login-register-button hover-float-shadow align-self-flex-end-lg pr-25">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_Footer")

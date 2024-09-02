@@ -1,0 +1,71 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    ContactPageData contactPageData = (ContactPageData)ViewData[Constant.CONTACT_PAGE_DATA];
+    Location officeLocation = contactPageData.Location;
+    List<Staff> staffList = contactPageData.Staff;
+}
+
+<!-- Office Map Start -->
+<div class="container-xxl py-5 pb-0">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Find Us</h6>
+            <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Office</span></h1>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div id="contact_map" data-location-name="@officeLocation.Name" data-lattitude="@officeLocation.Lattitude" data-longitude="@officeLocation.Longitude" class="g-map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Office Map End -->
+
+<!-- Team Start -->
+<div class="container-xxl py-5 pb-0 contact-team-container">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
+            <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
+        </div>
+        <div class="row g-4 display-flex justify-content-center">
+            @if (staffList != null && staffList.Any())
+            {
+                foreach (Staff staff in staffList)
+                {
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="@staff.AnimationDelayTime">
+                        <div class="rounded shadow overflow-hidden">
+                            <div class="position-relative">
+                                <img class="contact-team-img" src="@staff.StaffDisplayImage" alt="@staff.Name" />
+                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                    <a class="btn btn-square btn-primary mx-1" href="@staff.LinkedInUrl" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                    <a class="btn btn-square btn-primary mx-1" href="@staff.FacebookUrl" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                    <a class="btn btn-square btn-primary mx-1" href="@staff.InstagramUrl" target="_blank"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center p-4 mt-3">
+                                <h5 class="fw-bold mb-0">@staff.Name</h5>
+                                <small>@staff.Designation</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h3>@Constant.NO_STAFFS_MESSAGE</h3>
+            }
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+
+@Html.Partial("_Footer")

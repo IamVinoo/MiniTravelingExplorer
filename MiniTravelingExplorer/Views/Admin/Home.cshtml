@@ -1,0 +1,108 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@Html.Partial("_AdminHeader")
+
+@Html.Partial("_AdminSidebar")
+
+@{
+    HomePageData homePageData = (HomePageData)ViewData[Constant.ADMIN_HOME_PAGE_DATA];
+    int totalLocation = 0;
+    int totalRoom = 0;
+    int totalStaff = 0;
+    int? totalTestimonial = 0;
+
+    if (homePageData != null)
+    {
+        totalLocation = homePageData.TotalLocation;
+        totalRoom = homePageData.TotalRoom;
+        totalStaff = homePageData.TotalStaff;
+        totalTestimonial = homePageData.TestimonialList?.Count;
+    }
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1 class="text-primary"><strong>Dashboard</strong></h1>
+    </div>
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-xxl-4 col-md-3">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Location</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bx bxs-directions"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>@totalLocation</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-4 col-md-3">
+                        <div class="card info-card revenue-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Room</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bx bxs-hotel"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>@totalRoom</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-4 col-md-3">
+                        <div class="card info-card customers-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Staff</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>@totalStaff</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-4 col-md-3">
+                        <div class="card info-card customers-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Testimonial</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bx bx-notepad"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>@totalTestimonial</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@Html.Partial("_AdminFooter")

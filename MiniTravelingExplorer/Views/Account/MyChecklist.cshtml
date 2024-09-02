@@ -1,0 +1,106 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    ChecklistData myChecklistData = (ChecklistData)ViewData[Constant.CHECKLIST_DATA];
+    bool isChecklistEmpty = myChecklistData == null || myChecklistData.ChecklistList == null || !myChecklistData.ChecklistList.Any();
+    bool isActiveBookingAvailable = myChecklistData != null && myChecklistData.ActiveBookingList != null && myChecklistData.ActiveBookingList.Any();
+}
+
+<input type="hidden" id="my_checklist_active_booking" value="@myChecklistData.ActiveBooking" />
+<input type="hidden" id="my_checklist_checklist_name_error_message_text" value="@Constant.MY_CHECKLIST_CHECKLIST_NAME_ERROR_MESSAGE" />
+<input type="hidden" id="my_checklist_booking_name_error_message_text" value="@Constant.MY_CHECKLIST_BOOKING_NAME_ERROR_MESSAGE" />
+<input type="hidden" id="my_checklist_share_email_error_message_text" value="@Constant.ENTER_EMAIL_ERROR_MESSAGE" />
+<input type="hidden" id="my_checklist_share_email_invalid_error_message_text" value="@Constant.ENTER_EMAIL_INVALID_ERROR_MESSAGE" />
+
+<div class="container-xxl py-5 @(isActiveBookingAvailable && !isChecklistEmpty ? "" : "mt-5")">
+    <div class="container">
+        @if (isActiveBookingAvailable && !isChecklistEmpty)
+        {
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-end mb-3">
+                    <div class="icon-group">
+                        <a class="btn btn-sm btn-primary rounded py-2 px-4 pl-40" href="javascript:void(0);" onclick="createMyChecklist();"><span>Create Checklist</span></a>
+                        <i class="fa fa-pencil-alt my-checklist-pencil-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    localStorage.setItem("isFirstTimeChecklistPageVisit", "false");
+                });
+            </script>
+        }
+
+        @if (!isChecklistEmpty)
+        {
+            <div class="row g-4">
+                <div class="col-md-12 text-center">
+                    <i class="checklist-message">@Constant.CHECKLIST_HEADER_MESSAGE</i>
+                </div>
+
+                @foreach (MyChecklist myChecklist in myChecklistData.ChecklistList)
+                {
+                    bool isChecklistItemEmpty = (myChecklist.ChecklistItemCount <= 0);
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="@myChecklist.AnimationDelayTime">
+                        <div class="icon-group">
+                            <i class="fa fa-trash text-danger my-checklist-delete-icon" onclick="deleteMyChecklist('@myChecklist.ChecklistId', '@myChecklist.BookingId')" title="Delete"></i>
+
+                            @if (!isChecklistItemEmpty)
+                            {
+                                <i class="fa fa-share-square text-primary my-checklist-share-icon">
+                                    <span class="shadow tooltip-content">
+                                        <h6>Share via</h6>
+                                        <a href="javascript:void(0);" class="text-secondary mb-2"><span class="cursor-pointer" onclick="getChecklistShareLink('Email', '@myChecklist.ChecklistId', '@myChecklist.ChecklistName', '@myChecklist.BookingId');">Email</span></a>
+                                        <a href="javascript:void(0);" class="text-secondary mb-1"><span class="cursor-pointer" onclick="getChecklistShareLink('CopyLink', '@myChecklist.ChecklistId', '@myChecklist.ChecklistName', '@myChecklist.BookingId');">Copy Share Link</span></a>
+                                    </span>
+                                </i>
+                            }
+
+                        </div>
+                        <div class="my-checklist-card overflow-hidden cursor-pointer" onclick="getMyChecklistItem('@myChecklist.ChecklistId', '@myChecklist.BookingId')">
+                            <h3>@myChecklist.ChecklistName</h3>
+                            <h6>@myChecklist.LocationName</h6>
+                            <h6>
+                                <span id="@("my_checklist_trip_date" + myChecklist.ChecklistId)"></span>
+                                <script type="text/javascript">setTimeout(function () { setDisplayDate("#my_checklist_trip_date" + "@myChecklist.ChecklistId", "@myChecklist.TripDate"); }, 2000);</script>
+                            </h6>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <h3 class="text-center">@Constant.NO_CHECKLIST_MESSAGE</h3>
+
+            if (!isActiveBookingAvailable)
+            {
+                <h3 class="text-center">@Constant.BOOK_AND_CREATE_CHECKLIST_MESSAGE</h3>
+
+                <div class="col-md-12 d-flex justify-content-center">
+                    <a href="/Location/List" class="btn btn-primary py-md-3 px-md-5 mt-4 animated slideInRight">Browse</a>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12 d-flex justify-content-center mt-4">
+                    <div class="icon-group">
+                        <a class="btn btn-sm btn-primary rounded py-2 px-4 pl-40" href="javascript:void(0);" onclick="createMyChecklist();"><span>Create Checklist</span></a>
+                        <i class="fa fa-pencil-alt my-checklist-pencil-icon"></i>
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+</div>
+
+@Html.Partial("_Footer")

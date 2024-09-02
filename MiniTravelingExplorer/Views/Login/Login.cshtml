@@ -1,0 +1,59 @@
+﻿@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("_Header")
+
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left align-center-elements">
+            <img src="../../Images/Logo2.jpg" alt="" />
+            <h3>Welcome</h3>
+        </div>
+        <div id="register_tab_sm" class="align-center-elements mb-2">
+            @Html.Partial("_LoginTab")
+        </div>
+        <div class="col-md-9 register-right">
+            <div id="register_tab_lg">
+                @Html.Partial("_LoginTab")
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row register-form align-center-elements">
+                        <div class="col-md-12">
+                            <h3 class="login-title-heading text-center">Login</h3>
+                        </div>
+                        <div class="col-md-6 align-center-elements justify-content-center margin-bottom-sm-m15">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" id="login_email" class="form-control" name="Email" placeholder="Email *" />
+                                <span id="login_email_error_message" class="field-validation-error hide" data-valmsg-for="login_email" data-valmsg-replace="true" maxlength="100">@Constant.ENTER_EMAIL_ERROR_MESSAGE</span>
+                                <span id="login_email_invalid_error_message" class="field-validation-error hide" data-valmsg-for="login_email" data-valmsg-replace="true">@Constant.ENTER_EMAIL_INVALID_ERROR_MESSAGE</span>
+                            </div>
+                            <div class="form-group icon-group">
+                                <label>Password</label>
+                                <i class="fa-icon fa fa-eye login-password-eye-icon hide"></i>
+                                <i class="fa-icon fa fa-eye-slash login-password-eye-slash-icon"></i>
+                                <input type="password" id="login_password" class="form-control" name="Password" placeholder="Password *" maxlength="20" />
+                                <span id="login_password_error_message" class="field-validation-error hide" data-valmsg-for="login_password" data-valmsg-replace="true">@Constant.ENTER_PASSWORD_ERROR_MESSAGE</span>
+                                <span id="login_password_invalid_error_message" class="field-validation-error hide" data-valmsg-for="login_password" data-valmsg-replace="true">@Constant.ENTER_PASSWORD_INVALID_ERROR_MESSAGE</span>
+                                <span id="result"></span>
+                            </div>
+                            <a href="/Login/ResetPassword?resetPasswordData=&allowToReset=false" class="align-self-flex-end forgot-password-text-login hide-sm">Forgot Password?</a>
+                            <button id="login_lg_button" class="btnLogin hover-float-shadow mt-1 hide-sm">Login</button>
+                        </div>
+                        <div class="col-md-12 pr-25 mt-4 hide-lg">
+                            <a href="/Login/ResetPassword?resetPasswordData=&allowToReset=false" class="float-right-sm">Forgot Password?</a>
+                        </div>
+                        <div class="col-md-12 pr-25 hide-lg">
+                            <button id="login_sm_button" class="btnLogin login-register-button float-right-sm">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

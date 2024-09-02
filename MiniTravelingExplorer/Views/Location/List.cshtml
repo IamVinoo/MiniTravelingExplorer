@@ -1,0 +1,75 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    LocationData locationData = (LocationData)ViewData[Constant.LOCATION_DATA];
+    bool isLocationEmpty = locationData.LocationList == null || !locationData.LocationList.Any();
+}
+
+<input type="hidden" id="location_data_minimum_price" value="@locationData.MinimumRate" />
+<input type="hidden" id="location_data_maximum_price" value="@locationData.MaximumRate" />
+<input type="hidden" id="location_data_minimum_temperature" value="@locationData.MinimumTemperature" />
+<input type="hidden" id="location_data_maximum_temperature" value="@locationData.MaximumTemperature" />
+
+<div class="container-xxl py-5 pb-0">
+    <div class="container">
+        <div class="bg-white location-list-advanced-filter-container shadow">
+            @Html.Partial("_LocationSearch", locationData)
+        </div>
+    </div>
+
+    @if (!isLocationEmpty)
+    {
+        foreach (Location location in locationData.LocationList)
+        {
+            <div class="row mt-5">
+                <div class="col-md-12 location-list-grid wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="shadow location-list-grid border-radius-20 overflow-hidden">
+                        <div class="row g-5 align-items-center mt-4">
+                            <div class="col-lg-6 mt-0">
+                                <div class="margin-bottom-m5">
+                                    <h3 class="display-inline-block">@location.Name</h3>
+                                    <hr class="liner-location d-lg-none" />
+                                    <h6 class="display-inline-block location-list-temperature margin-left-sm-0" title="@location.Weather.Description">@location.Weather.Temperature</h6>
+                                    <div class="display-inline-block location-list-weather-icon-container">
+                                        <span class="tooltip-content @(location.Weather.IsNotAvailable ? "hide": "")">@Html.Partial("_WeatherInformation", location.Weather)</span>
+                                        <img class="location-list-weather-icon" src="@location.Weather.WeatherIconUrl" />
+                                    </div>
+                                    @if (location.IsFirstItem)
+                                    {
+                                        <div class="left-hand-icon-container display-inline-block hide-sm">
+                                            <i class="fas fa-hand-point-left text-secondary left-hand-icon"></i><span class="location-list-hover-me-text text-secondary">Hover me</span>
+                                        </div>
+                                    }
+                                </div>
+                                <h6>@location.Activity <span class="text-default text-primary"><span>@location.CurrencySymbol</span><span>@location.Rate</span> - <span>@location.TotalNumberOfPerson</span> @if(location.TotalNumberOfPerson > 1) { <span>Persons</span> } else { <span>Person</span> } </span></h6>
+                                <p class="mb-4">@location.Description</p>
+                            </div>
+                            <div class="col-lg-6 mt-0">
+                                <img class="img-fluid location-list-image rounded wow zoomIn" data-wow-delay="0.1s" src="@location.LocationImageUrl">
+                                <div class="icon-group text-right mt-3 mb-3 location-list-button-container">
+                                    <i class="fa fa-map-marker-alt location-list-map-marker-icon"></i>
+                                    <a class="btn btn-sm btn-secondary rounded py-2 px-4 mx-2 margin-left-sm-m10" href="@location.MapUrl" target="_blank"><span class="location-list-button-text">View Map</span></a>
+                                    <i class="fa fa-chevron-right location-list-chevron-right-icon"></i>
+                                    <a class="btn btn-sm btn-primary rounded py-2 px-4 margin-left-sm-m7" href="@string.Concat(Constant.FORWARD_SLASH, Constant.LOCATION_DETAIL_LINK, location.LocationId)"><span class="location-list-button-text">View Detail</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h3 class="text-center mt-5">@Constant.NO_LOCATION_MESSAGE</h3>
+    }
+</div>
+
+@Html.Partial("_Footer")

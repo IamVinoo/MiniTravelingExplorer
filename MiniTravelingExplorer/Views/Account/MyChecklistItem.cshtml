@@ -1,0 +1,77 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    List<MyChecklistItem> myChecklistItemList = ViewData[Constant.CHECKLIST_ITEM_TABLE] as List<MyChecklistItem>;
+    bool isChecklistItemEmpty = myChecklistItemList == null || !myChecklistItemList.Any();
+}
+
+<div class="container-xxl my-checklist-item-container py-5 @(!isChecklistItemEmpty ? "pt-10" : "mt-5")">
+    <div class="container">
+        <div class="row my-checklist-item-empty-message-container @(!isChecklistItemEmpty ? "hide" : "")">
+            <h3 class="text-center">@Constant.NO_CHECKLIST_ITEM_MESSAGE</h3>
+
+            <div class="col-md-12 d-flex justify-content-center mt-4">
+                <div class="icon-group">
+                    <a class="btn btn-sm btn-primary rounded py-2 px-4 pl-40" href="javascript:void(0);" onclick="createMyChecklistItem();"><span>Create Checklist Item</span></a>
+                    <i class="fa fa-pencil-alt my-checklist-item-pencil-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-checklist-item-empty-list-container @(isChecklistItemEmpty ? "hide" : "")">
+            <div class="col-md-12 d-flex justify-content-center mt-4">
+                <a class="btn btn-sm btn-primary rounded py-2 margin-right-20" href="/Account/MyChecklist" title="Back To My Checklist"><i class="fa fa-arrow-left my-checklist-item-back-icon"></i></a>
+
+                <div class="form-group margin-right-20">
+                    <input type="text" id="my_checklist_item_name" class="form-control" placeholder="Add new item" maxlength="100">
+                    <span id="my_checklist_item_name_error_message" class="field-validation-error hide">@Constant.MY_CHECKLIST_ITEM_NAME_ERROR_MESSAGE</span>
+                </div>
+
+                <a class="btn btn-sm btn-primary rounded my-checklist-item-add py-2" href="javascript:void(0);"><span>Add Item</span></a>
+            </div>
+        </div>
+
+        <div class="my-checklist-item-list-container d-flex justify-content-center mt-4">
+            @if (!isChecklistItemEmpty)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table my-checklist-item-table">
+                            <tbody class="my-checklist-item-table-body">
+                                @foreach (MyChecklistItem myChecklistItem in myChecklistItemList)
+                                {
+                                    <tr id="@("my_checklist_item_table_row_" + myChecklistItem.ChecklistItemId)" class="my-checklist-item-table-row">
+                                        <td class="my-checklist-item-table-checkbox-container">
+                                            <input type="checkbox" id="@("my_checklist_item_checkbox_" + myChecklistItem.ChecklistItemId)" class="my-checklist-item-checkbox cursor-pointer" @(myChecklistItem.IsChecked ? "checked='checked'" : "") onclick="checkMyChecklistItem(@myChecklistItem.ChecklistItemId)" />
+                                        </td>
+                                        <td class="my-checklist-item-table-name-container">
+                                            <span id=@("my_checklist_item_table_name_" + myChecklistItem.ChecklistItemId) class="my-checklist-item-table-name">@myChecklistItem.Name</span>
+                                            <input type="text" id=@("my_checklist_item_table_name_input_" + myChecklistItem.ChecklistItemId) class="form-control hide" onkeyup="updateChecklistItemOnEnterKey(event, @myChecklistItem.ChecklistItemId);" onblur="updateChecklistItem(@myChecklistItem.ChecklistItemId);" />
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-pencil-alt text-success cursor-pointer my-checklist-item-edit-icon" onclick="updateMyChecklistItem(@myChecklistItem.ChecklistItemId)" title="Edit"></i>
+                                        </td>
+                                        <td class="pl-15">
+                                            <i class="fa fa-trash text-danger cursor-pointer my-checklist-item-delete-icon" onclick="deleteMyChecklistItem(@myChecklistItem.ChecklistItemId)" title="Delete"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="my-checklist-item-table-spacer"><td colspan="100"></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@Html.Partial("_Footer")

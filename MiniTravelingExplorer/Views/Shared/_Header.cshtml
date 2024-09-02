@@ -1,0 +1,81 @@
+﻿@using System.Configuration
+@using MiniTravelingExplorer.Utils
+
+<input type="hidden" id="system_cookie_expiration_time" value="@ConfigurationManager.AppSettings[Constant.COOKIE_EXPIRATION_TIME_KEY]" />
+
+<!-- Header Start -->
+<div class="container-fluid bg-dark px-0">
+    <div class="row gx-0">
+        <div class="col-lg-3 bg-dark d-none d-lg-block">
+            <a href="/Home/Home" class="navbar-brand logo-header-container w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                <img class="logo-height" src="../../Images/Logo-transparent-background2.png" alt="" />
+                <h5 class="m-0 logo-header-text text-primary">Mini Traveling Explorer</h5>
+            </a>
+        </div>
+        <div class="col-lg-9">
+            <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
+                <a href="/Home/Home" class="navbar-brand d-flex  d-lg-none align-items-center justify-content-center">
+                    <img class="logo-height-sm" src="../../Images/Logo-transparent-background2.png" alt="" />
+                    <h6 class="m-0 text-primary text-uppercase">Mini Traveling Explorer</h6>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav nav-menu-header mr-auto py-0">
+                        <a id="home_tab" href="/Home/Home" class="nav-item nav-link">Home</a>
+                        <a id="location_tab" href="/Location/List" class="nav-item nav-link">Locations</a>
+                        <a id="services_tab" href="javascript:void(0);" class="nav-item nav-link">Services</a>
+                        <a id="rooms_tab" href="/Room/List" class="nav-item nav-link">Rooms</a>
+                        <a id="about_tab" href="/Home/About" class="nav-item nav-link">About</a>
+                        <a id="contact_tab" href="/Home/Contact" class="nav-item nav-link">Contact Us</a>
+
+                        @if (Session[Constant.USER_ID] != null)
+                        {
+                            <div class="profile_tab_container d-lg-none d-lg-flex">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="profile_lg_user_name nav-link dropdown-toggle" data-bs-toggle="dropdown">My Account</a>
+                                    <div class="dropdown-menu rounded-0 m-0">
+                                        <img class="profile_image user-profile-image-target mb-2" src="@Session[Constant.USER_IMAGE]" />
+                                        <a href="javascript:void(0);" class="dropdown-item user-profile-image-target">My Profile - @Session[Constant.FULL_NAME]</a>
+                                        <a href="javascript:void(0);" class="dropdown-item my-checklist">My Checklist</a>
+                                        <a href="javascript:void(0);" class="dropdown-item my-booking">My Booking</a>
+                                        <a href="javascript:void(0);" class="dropdown-item change-email">Change Email</a>
+                                        <a href="javascript:void(0);" class="dropdown-item change-password">Change Password</a>
+                                        <a href="javascript:void(0);" class="dropdown-item log-out">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a id="regitser_login_sm_tab" href="/Login/Login" class="nav-item nav-link hide-lg">@(Session[Constant.ADMIN_USER_ID] != null ? "Admin" : "Register / Login")</a>
+                        }
+                    </div>
+                    @if (Session[Constant.USER_ID] != null)
+                    {
+                        <div class="profile_tab_container d-none d-lg-flex">
+                            <div class="nav-item dropdown profile-lg-nav-item-dropdown">
+                                <a href="#" class="profile_lg_user_name nav-link dropdown-toggle mt-2" data-bs-toggle="dropdown">My Account</a>
+                                <div class="dropdown-menu-lg dropdown-menu rounded-0 m-0">
+                                    <a href="javascript:void(0);" class="dropdown-item user-profile-image-target">My Profile - @Session[Constant.FULL_NAME]</a>
+                                    <a href="javascript:void(0);" class="dropdown-item my-checklist">My Checklist</a>
+                                    <a href="javascript:void(0);" class="dropdown-item my-booking">My Booking</a>
+                                    <a href="javascript:void(0);" class="dropdown-item change-email">Change Email</a>
+                                    <a href="javascript:void(0);" class="dropdown-item change-password">Change Password</a>
+                                    <a href="javascript:void(0);" class="dropdown-item log-out">Logout</a>
+                                </div>
+                            </div>
+                            <img class="profile_image user-profile-image-target" src="@Session[Constant.USER_IMAGE]" />
+                        </div>
+                    }
+                    else
+                    {
+                        <a id="register_login_lg_button" href="/Login/Login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">@(Session[Constant.ADMIN_USER_ID] != null ? "Admin" : "Register / Login")</a>
+                    }
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Header End -->

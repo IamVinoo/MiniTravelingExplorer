@@ -1,0 +1,9 @@
+IF EXISTS (SELECT TOP 1 1 FROM [SYS].[SCHEMAS] WHERE [Name] = 'MTE')
+	BEGIN
+		PRINT 'Schema [MTE] already exists';
+	END
+ELSE
+	BEGIN
+		EXECUTE ('CREATE SCHEMA [MTE]');
+	END;
+GO

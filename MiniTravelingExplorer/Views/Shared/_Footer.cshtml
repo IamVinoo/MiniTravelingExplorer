@@ -1,0 +1,73 @@
+﻿@using MiniTravelingExplorer.Utils
+
+<!-- Newsletter Start -->
+<div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 border rounded p-1">
+            <div class="border rounded text-center p-1">
+                <div class="bg-white rounded text-center p-5">
+                    <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
+                    <div class="footer-subscription-email-container position-relative mx-auto" style="max-width: 400px;">
+                        <input id="footer_subscription_email" class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email" maxlength="100">
+                        <button id="footer_subscription_button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
+                    </div>
+                    <div>
+                        <span id="footer_subscription_email_error_message" class="field-validation-error hide" data-valmsg-for="login_email" data-valmsg-replace="true">@Constant.ENTER_EMAIL_ERROR_MESSAGE</span>
+                        <span id="footer_subscription_email_invalid_error_message" class="field-validation-error hide" data-valmsg-for="login_email" data-valmsg-replace="true">@Constant.ENTER_EMAIL_INVALID_ERROR_MESSAGE</span>
+                    </div>
+                    <h5 class="footer-subscription-message hide"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Newsletter Start -->
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
+    <div class="container pb-5">
+        <div class="row g-5">
+            <div class="col-md-12 col-lg-4">
+                <div class="bg-primary rounded p-4">
+                    <a href="/Home/Home" class="d-flex">
+                        <img class="logo-footer" src="../../Images/Logo2.jpg" alt="" />
+                        <h6 class="text-white text-uppercase mb-0">Mini Traveling Explorer</h6>
+                    </a>
+                    <p class="text-white footer-about-us mb-0 mt-3">
+                        Our vision for Mini Traveling Explorer is to revolutionize the way people plan and experience travel by providing a seamless and personalized platform that empowers users to organize their trips efficiently and effortlessly.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 footer-company-container">
+                <div class="row gy-5 g-4">
+                    <div class="col-md-9 footer-company">
+                        <h6 class="section-title text-primary text-uppercase mb-4 ml-55">Company</h6>
+                        <a class="btn btn-link" href="/Home/About">About Us</a>
+                        <a class="btn btn-link" href="/Home/Contact">Contact Us</a>
+                        <a class="btn btn-link" href="../../Template/Pdf/Privacy Policy.pdf">Privacy Policy</a>
+                        <a class="btn btn-link" href="../../Template/Pdf/Terms & Condition.pdf">Terms & Condition</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 footer-contact">
+                <h6 class="section-title text-primary text-uppercase mb-4 ml-55">Contact</h6>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a class="text-white" href="https://maps.google.com/?q=49 Frederick Street, Kitchener, ON N2H 6M7" target="_blank">49 Frederick Street, Kitchener, ON N2H 6M7</a></p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a class="text-white" href="tel:+11234567890">+1 (123)-456-7890</a></p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i><a class="text-white footer-contact-email" href="mailto:contact@minitravelingexplorer.ca">contact@minitexplorer.ca</a></p>
+                <div class="d-flex pt-2 footer-social">
+                    <a class="btn btn-outline-light btn-social" href="https://twitter.com/MiniTravelingExplorer" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/minitravelingexplorer" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://www.youtube.com/c/MiniTravelingExplorer" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/in/mini-traveling-explorer" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+              <div class="col-md-12 text-center text-md-start mt-4">
+                © All Right Reserved. Designed By <a class="border-bottom" href="https://htmlcodex.com" target="_blank">HTML Codex</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->

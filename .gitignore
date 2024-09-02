@@ -1,0 +1,12 @@
+binobjlogs*.user/MiniTravelingExplorer/.vs
+/MiniTravelingExplorer/.vs/MiniTravelingExplorer/FileContentIndex/*.vsidx
+/MiniTravelingExplorer/.vs/MiniTravelingExplorer/v17
+/MiniTravelingExplorer/*.user
+/MiniTravelingExplorer/bin
+/MiniTravelingExplorer/obj
+/MiniTravelingExplorer/.vs/MiniTravelingExplorer.csproj.dtbcache.json
+/MiniTravelingExplorer/.vs/MiniTravelingExplorer/config/applicationhost.config
+/MiniTravelingExplorer/obj/Debug
+/MiniTravelingExplorer/Properties/PublishProfiles
+/MiniTravelingExplorer/obj/Release
+/SQLDataScripts/MergedSqlScripts.sql

@@ -1,0 +1,19 @@
+﻿@model MiniTravelingExplorer.Models.WeatherDisplay
+@using MiniTravelingExplorer.Utils
+
+@if (Model != null && !Model.IsNotAvailable)
+{
+    <div class="display-grid weather-info-container">
+        <div><h6 class="text-capitalize text-secondary mb-1 margin-left-1">@Model.Description</h6></div>
+        <div><span title="@Constant.CLOUD_PERCENTAGE_WEATHER_STRING"><i class="wi @(Model.IsDay ? "wi-day-cloudy" : "wi-night-alt-cloudy")  text-secondary margin-left-3 margin-right-18"></i>@Model.CloudPercentage</span></div>
+        <div><span title="@Constant.FEELS_LIKE_WEATHER_STRING"><i class="fa fa-thermometer-half text-secondary margin-left-7"></i><i class="fi fi-tr-wind text-secondary margin-right-8"></i>@Model.FeelsLikeTemperature</span></div>
+        <div><span title="@Constant.MINIMUM_TEMPERATURE_WEATHER_STRING"><i class="fa fa-thermometer-empty text-secondary margin-left-7 margin-right-23"></i>@Model.MinimumTemperature</span></div>
+        <div><span title="@Constant.MAXIMUM_TEMPERATURE_WEATHER_STRING"><i class="fa fa-thermometer-full text-secondary margin-left-7 margin-right-23"></i>@Model.MaximumTemperature</span></div>
+        <div><span title="@Constant.WIND_WEATHER_STRING"><i class="wi wi-wind wi-from-@Model.WindDirection.ToLower() text-secondary font-size-20 margin-left-3 margin-right-20"></i>@Model.Wind @Model.WindDirection</span></div>
+        <div><span title="@Constant.GUSTS_WEATHER_STRING"><i class="fi fi-tr-wind text-secondary margin-left-4 margin-right-20"></i>@Model.Gust</span></div>
+        <div><span title="@Constant.PRESSURE_WEATHER_STRING"><i class="wi wi-barometer text-secondary margin-left-3 margin-right-24"></i>@Model.Pressure</span></div>
+        <div><span title="@Constant.SUNRISE_TIME_WEATHER_STRING"><i class="wi wi-sunrise text-secondary margin-right-20"></i>@Model.SunriseTime</span></div>
+        <div><span title="@Constant.SUNSET_TIME_WEATHER_STRING"><i class="wi wi-sunset text-secondary margin-right-20"></i>@Model.SunsetTime</span></div>
+        <a class="text-secondary" href="@Model.Url" target="_blank">More information..</a>
+    </div>
+}

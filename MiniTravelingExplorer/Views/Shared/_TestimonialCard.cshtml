@@ -1,0 +1,16 @@
+﻿@model MiniTravelingExplorer.Models.Testimonial
+
+@if (Model != null)
+{
+    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
+        <div class="d-flex align-items-center mb-4">
+            <img class="img-fluid flex-shrink-0 rounded testimonial-item-image" src="@Model.ClientPhotoUrl" alt="@Model.ClientName">
+            <div class="ps-3">
+                <h6 class="fw-bold mb-1">@Model.ClientName</h6>
+                <small>@Model.ClientProfession</small>
+            </div>
+        </div>
+        <p class="testimonial-item-review">@Model.Review</p>
+        <i class="fa fa-quote-right testimonial-item-quote fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+    </div>
+}

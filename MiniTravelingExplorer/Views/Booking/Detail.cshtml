@@ -1,0 +1,96 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    Booking bookingDetail = (Booking)ViewData[Constant.BOOKING_DETAIL];
+}
+
+@Html.Partial("_Header")
+
+<div class="container-xxl py-5 pb-0 margin-bottom-m5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h4 class="section-title text-center text-primary text-uppercase margin-bottom-35">My Booking</h4>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                @Html.Partial("_ResponsiveMessage")
+            </div>
+        </div>
+        <div class="row booking-detail-container-wrapper">
+            @if (bookingDetail != null)
+            {
+                <div class="col-lg-6 book-detail-container mt-0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <a href="@string.Concat(Constant.FORWARD_SLASH, Constant.LOCATION_DETAIL_LINK, bookingDetail.LocationId)">
+                                    <h3 class="cursor-pointer">@bookingDetail.LocationName</h3>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            Ticket #:
+                        </div>
+                        <div class="col-md-6">
+                            <p>@bookingDetail.TicketNumber</p>
+                        </div>
+                        <div class="col-md-6">
+                            Status:
+                        </div>
+                        <div class="col-md-6">
+                            <p><span class="@(bookingDetail.TripStatus ? "text-success" : "text-danger")"><span class="text-capitalize">@(bookingDetail.TripStatus ? Constant.ACTIVE_STATUS : Constant.EXPIRED_STATUS)</span></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            @bookingDetail.NumberOfTicketLabel:
+                        </div>
+                        <div class="col-md-6">
+                            <p>@bookingDetail.NumberOfTicketDisplay</p>
+                        </div>
+                        <div class="col-md-6">
+                            Trip Date
+                        </div>
+                        <div class="col-md-6">
+                            <p>@bookingDetail.TripDate.ToString(Constant.DATE_DEFAULT_FORMAT)</p>
+                        </div>
+                        <div class="col-md-6">
+                            Amount
+                        </div>
+                        <div class="col-md-6">
+                            <p>@bookingDetail.Amount</p>
+                        </div>
+                        <div class="col-md-6">
+                            Card Number
+                        </div>
+                        <div class="col-md-6">
+                            <p>@bookingDetail.CardNumber</p>
+                        </div>
+                        <div class="col-md-6">
+                            Booking Email
+                        </div>
+                        <div class="col-md-6">
+                            <p><a href="mailto:@bookingDetail.BookingEmail">@bookingDetail.BookingEmail</a></p>
+                        </div>
+                        <div class="col-md-6">
+                            Booked By
+                        </div>
+                        <div class="col-md-6">
+                            <p>@bookingDetail.BookedBy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-0">
+                    <a href="@string.Concat(Constant.LOCATION_DETAIL_LINK, bookingDetail.LocationId)">
+                        <img class="img-fluid booking-detail-location-image rounded wow zoomIn" data-wow-delay="0.1s" src="@bookingDetail.LocationImageUrl">
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_Footer")

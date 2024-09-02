@@ -1,0 +1,37 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Header")
+
+@{
+    List<Room> roomList = ViewData[Constant.ROOM_TABLE] as List<Room>;
+}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
+            <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
+        </div>
+        <div class="row g-4">
+            @if (roomList != null && roomList.Any())
+            {
+                foreach (Room room in roomList)
+                {
+                    @Html.Partial("_RoomCard", room)
+                }
+            }
+            else
+            {
+                <h3 class="text-center">@Constant.NO_ROOMS_MESSAGE</h3>
+            }
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("_Footer")

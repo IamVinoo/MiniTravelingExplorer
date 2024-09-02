@@ -1,0 +1,69 @@
+﻿@using MiniTravelingExplorer.Models
+@using MiniTravelingExplorer.Utils
+@using Newtonsoft.Json;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@Html.Partial("_AdminHeader")
+
+@Html.Partial("_AdminSidebar")
+
+@{
+    List<User> userList = ViewData[Constant.USER_TABLE] as List<User>;
+    bool isUserEmpty = userList == null || !userList.Any();
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="text-primary"><strong>User</strong></h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <label class="switch user-switch">
+                    <input type="checkbox" class="user-switch-input">
+                    <span class="slider round"></span>
+                </label>
+                <h6 class="display-inline-block"><strong><span class="user-switch-text">Website Users</span></strong></h6>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Partial("_ResponsiveMessage")
+                </div>
+
+                <div class="col-md-12 user-list-container">
+                    @if (!isUserEmpty)
+                    {
+                        <table id="user_list_container" class="display cell-border hover order-column row-border stripe data-table-container"></table>
+                        <script type="text/javascript">
+                            var userListInterval = setInterval(function () {
+                                var isLoaded;
+                                try {
+                                    initUsersListPage(@Html.Raw(JsonConvert.SerializeObject(userList)));
+                                    isLoaded = true;
+                                }
+                                catch (err) {
+                                    isLoaded = false;
+                                }
+                                finally {
+                                    if (isLoaded) {
+                                        clearInterval(userListInterval);
+                                    }
+                                }
+                            }, 100);
+                        </script>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@Html.Partial("_AdminFooter")

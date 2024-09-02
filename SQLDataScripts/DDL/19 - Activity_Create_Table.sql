@@ -1,0 +1,14 @@
+IF (EXISTS (SELECT * 
+                 FROM [INFORMATION_SCHEMA].[TABLES] 
+                 WHERE [TABLE_SCHEMA] = 'MTE'
+				 AND [TABLE_NAME] = 'Activity'))
+BEGIN
+    DROP TABLE [MTE].[Activity];
+END
+
+CREATE TABLE [MTE].[Activity] (
+    [ActivityId] INT PRIMARY KEY IDENTITY(1, 1),
+    [Name] NVARCHAR(500) NOT NULL,
+    [CreatedDate] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+    [ModifiedDate] DATETIME NOT NULL DEFAULT GETUTCDATE()
+);
