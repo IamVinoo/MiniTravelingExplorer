@@ -29,7 +29,9 @@ AS
 			[IsAdminUser],
 			[CreatedDate]
 		FROM
-			[MTE].[UserIpInfo];
+			[MTE].[UserIpInfo]
+		ORDER BY
+			[CreatedDate] DESC;
    END
    RETURN;
 GO 

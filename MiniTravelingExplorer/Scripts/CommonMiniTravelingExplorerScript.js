@@ -494,7 +494,7 @@ function setTableData(isDestroy, container, dataSet, columns, columnDefs, order)
     });
 
     new DataTable(container, {
-        order: order,
+        order: (order ? order : false),
         columns: columns,
         columnDefs: columnDefs,
         data: dataSet

@@ -376,22 +376,19 @@ initUserIpInfoListPage = function initUserIpInfoListPage(userIpInfoList, isSideb
             var columnDefs = [{
                 target: 4,
                 visible: (isSidebarcollapsed ? true : false),
-                searchable: false
+                searchable: (isSidebarcollapsed ? true : false)
             },
             {
                 target: 10,
                 orderable: false
             }];
 
-            var order = [[10, orderDesc]];
-
             setTableData(
                 isDestroy,
                 userIpInfoListContainerId,
                 userIpInfoList,
                 columns,
-                columnDefs,
-                order
+                columnDefs
             );
         }
     }
